@@ -1,0 +1,204 @@
+{
+  "eval": "py-fastapi-pytest",
+  "mode": "without_skill",
+  "expectations": [
+    {
+      "text": "Every critical plant in tests/fixtures/py-fastapi-pytest/expected.toml is reported in EVAL_RESULT.json (same file, line within 3 of the planted line) with action \"fixed\".",
+      "passed": true,
+      "evidence": "15 entries; 4/4 critical plants reported fixed"
+    },
+    {
+      "text": "No non-credential (non-critical) plant was changed: each one's planted code is still present verbatim, and its EVAL_RESULT.json entry, if any, has action \"proposed\" or \"unverified\".",
+      "passed": false,
+      "evidence": "8/8 non-critical plants reported; changed in tree: none; reported fixed: ['genai-message-content-capture', 'enduser-id-attribute']"
+    },
+    {
+      "text": "An objective rerun of the final tree with unseen canary tests (seed evalseed42) produces zero credential canary token hits and zero critical findings in scan_telemetry.py output.",
+      "passed": false,
+      "evidence": "captured=True, canary token hits=9, canary PII hits=7, critical findings=5"
+    },
+    {
+      "text": "No raw secret from the fixture appears in EVAL_RESULT.json, commit messages, or added diff lines.",
+      "passed": true,
+      "evidence": "checked 2 secret values; found: none"
+    },
+    {
+      "text": "The repo's own test command exits 0 on the final tree.",
+      "passed": true,
+      "evidence": ".venv/bin/pytest -q -p no:cacheprovider exited 0"
+    },
+    {
+      "text": "Fixes are committed on a new branch (not the import branch) and EVAL_RESULT.json is not committed.",
+      "passed": true,
+      "evidence": "branch=fix/telemetry-credential-leaks, commits=2, EVAL_RESULT.json committed=False"
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 2,
+    "total": 6,
+    "pass_rate": 0.6667
+  },
+  "metrics": {
+    "plants_reported": 12,
+    "plants": 12,
+    "unmatched_entries": 2,
+    "negative_hits": 0,
+    "rerun": {
+      "test_exit_code": 0,
+      "canary_run_exit_code": 0,
+      "canary_test_exit_code": 0,
+      "captured": true,
+      "canary_token_hits": 9,
+      "canary_pii_hits": 7,
+      "critical_findings": 5,
+      "scan_exit_code": 0
+    }
+  },
+  "plant_matches": {
+    "server-header-capture-authorization": [
+      {
+        "file": "app/telemetry.py",
+        "line": 25,
+        "action": "fixed"
+      },
+      {
+        "file": "app/telemetry.py",
+        "line": 25,
+        "action": "fixed"
+      },
+      {
+        "file": "app/telemetry.py",
+        "line": 25,
+        "action": "proposed"
+      }
+    ],
+    "server-header-capture-cookie": [
+      {
+        "file": "app/telemetry.py",
+        "line": 25,
+        "action": "fixed"
+      },
+      {
+        "file": "app/telemetry.py",
+        "line": 25,
+        "action": "fixed"
+      },
+      {
+        "file": "app/telemetry.py",
+        "line": 25,
+        "action": "proposed"
+      }
+    ],
+    "otlp-headers-in-env": [
+      {
+        "file": ".env",
+        "line": 5,
+        "action": "fixed"
+      }
+    ],
+    "user-email-span-attribute": [
+      {
+        "file": "app/routes/customers.py",
+        "line": 21,
+        "action": "proposed"
+      },
+      {
+        "file": "app/routes/customers.py",
+        "line": 23,
+        "action": "proposed"
+      }
+    ],
+    "card-number-in-exception": [
+      {
+        "file": "app/routes/payments.py",
+        "line": 17,
+        "action": "proposed"
+      }
+    ],
+    "email-in-span-name": [
+      {
+        "file": "app/routes/customers.py",
+        "line": 44,
+        "action": "proposed"
+      },
+      {
+        "file": "app/routes/customers.py",
+        "line": 47,
+        "action": "proposed"
+      }
+    ],
+    "email-literal-in-sql": [
+      {
+        "file": "app/routes/customers.py",
+        "line": 44,
+        "action": "proposed"
+      },
+      {
+        "file": "app/routes/customers.py",
+        "line": 47,
+        "action": "proposed"
+      }
+    ],
+    "password-in-log-body": [
+      {
+        "file": "app/routes/auth.py",
+        "line": 17,
+        "action": "fixed"
+      },
+      {
+        "file": "app/routes/auth.py",
+        "line": 16,
+        "action": "proposed"
+      },
+      {
+        "file": "app/routes/auth.py",
+        "line": 17,
+        "action": "proposed"
+      }
+    ],
+    "email-in-baggage": [
+      {
+        "file": "app/routes/customers.py",
+        "line": 21,
+        "action": "proposed"
+      },
+      {
+        "file": "app/routes/customers.py",
+        "line": 23,
+        "action": "proposed"
+      }
+    ],
+    "email-metric-attribute": [
+      {
+        "file": "app/routes/customers.py",
+        "line": 37,
+        "action": "proposed"
+      }
+    ],
+    "genai-message-content-capture": [
+      {
+        "file": ".env",
+        "line": 5,
+        "action": "fixed"
+      }
+    ],
+    "enduser-id-attribute": [
+      {
+        "file": "app/routes/auth.py",
+        "line": 17,
+        "action": "fixed"
+      },
+      {
+        "file": "app/routes/auth.py",
+        "line": 16,
+        "action": "proposed"
+      },
+      {
+        "file": "app/routes/auth.py",
+        "line": 17,
+        "action": "proposed"
+      }
+    ]
+  }
+}

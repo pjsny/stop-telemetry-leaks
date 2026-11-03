@@ -1,0 +1,107 @@
+[[plant]]
+id = "server-header-capture-authorization"
+surface = "http.request.header"
+key = "http.request.header.authorization"
+file = "app/telemetry.py"
+match = '"authorization,cookie,user-agent,x-request-id"'
+severity = "critical"
+runtime = true
+
+[[plant]]
+id = "server-header-capture-cookie"
+surface = "http.request.header"
+key = "http.request.header.cookie"
+file = "app/telemetry.py"
+match = '"authorization,cookie,user-agent,x-request-id"'
+severity = "critical"
+runtime = true
+
+[[plant]]
+id = "otlp-headers-in-env"
+surface = "exporter.config"
+key = "OTEL_EXPORTER_OTLP_HEADERS"
+file = ".env"
+match = "OTEL_EXPORTER_OTLP_HEADERS=x-honeycomb-team="
+severity = "critical"
+runtime = false
+
+[[plant]]
+id = "user-email-span-attribute"
+surface = "attribute"
+key = "user.email"
+file = "app/routes/customers.py"
+match = 'span.set_attribute("user.email", payload.email)'
+severity = "high"
+runtime = true
+
+[[plant]]
+id = "card-number-in-exception"
+surface = "exception"
+key = "exception.message"
+file = "app/routes/payments.py"
+match = 'ValueError(f"invalid card {payload.card}")'
+severity = "high"
+runtime = true
+
+[[plant]]
+id = "email-in-span-name"
+surface = "span.name"
+key = ""
+file = "app/routes/customers.py"
+match = 'start_as_current_span(f"lookup {email}")'
+severity = "high"
+runtime = true
+
+[[plant]]
+id = "email-literal-in-sql"
+surface = "db"
+key = "db.statement"
+file = "app/routes/customers.py"
+match = "WHERE email = '{email}'"
+severity = "high"
+runtime = true
+
+[[plant]]
+id = "password-in-log-body"
+surface = "log.body"
+key = ""
+file = "app/routes/auth.py"
+match = 'logger.info("login %s password=%s"'
+severity = "critical"
+runtime = true
+
+[[plant]]
+id = "email-in-baggage"
+surface = "baggage"
+key = "user.email"
+file = "app/routes/customers.py"
+match = 'baggage.set_baggage("user.email", payload.email)'
+severity = "high"
+runtime = false
+
+[[plant]]
+id = "email-metric-attribute"
+surface = "metric.attribute"
+key = "user.email"
+file = "app/routes/customers.py"
+match = '"user.email": payload.email}'
+severity = "medium"
+runtime = false
+
+[[plant]]
+id = "genai-message-content-capture"
+surface = "gen_ai"
+key = "OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT"
+file = ".env"
+match = "OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT=true"
+severity = "high"
+runtime = false
+
+[[plant]]
+id = "enduser-id-attribute"
+surface = "attribute"
+key = "enduser.id"
+file = "app/routes/auth.py"
+match = 'span.set_attribute("enduser.id", payload.username)'
+severity = "medium"
+runtime = true

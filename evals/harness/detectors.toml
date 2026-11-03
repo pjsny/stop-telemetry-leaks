@@ -1,0 +1,212 @@
+# Detector catalog for stop-telemetry-leaks.
+#
+# Every pattern must compile in both Python `re` and JavaScript `RegExp`:
+# no inline flags, no named groups, no possessive quantifiers, no `\A`/`\Z`.
+# Case-insensitivity is the `ignore_case` field.
+#
+# target:    "key" (matched against attribute keys) | "value" (matched against string values)
+# kind:      "credential" | "pii" | "quasi"
+# severity:  "critical" | "high" | "medium"
+# validator: "none" | "luhn" | "jwt" | "basic"
+# action:    "mask" | "hmac" | "drop" | "truncate_ip"
+
+# Attribute keys that carry credentials whatever the value looks like. The
+# sensitive word must be a whole dot/underscore/dash-delimited segment, so
+# `gen_ai.usage.input_tokens` and `session.id` do not match.
+[[detector]]
+id = "key-credential"
+target = "key"
+kind = "credential"
+severity = "critical"
+pattern = '(?:^|[._-])(?:proxy-authorization|authorization|set-cookie|cookie|x-api-key|api[_-]?key|access_token|refresh_token|id_token|client_secret|token|secret|passw(?:or)?d|session[_-]?id|session[_-]?token|private[_-]?key)(?:$|[._-])'
+ignore_case = true
+validator = "none"
+action = "mask"
+
+[[detector]]
+id = "jwt"
+target = "value"
+kind = "credential"
+severity = "critical"
+pattern = '\beyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]*'
+ignore_case = false
+validator = "jwt"
+action = "mask"
+
+[[detector]]
+id = "aws-access-key-id"
+target = "value"
+kind = "credential"
+severity = "critical"
+pattern = '\b(?:AKIA|ASIA|ABIA|ACCA)[A-Z0-9]{16}\b'
+ignore_case = false
+validator = "none"
+action = "mask"
+
+[[detector]]
+id = "github-token"
+target = "value"
+kind = "credential"
+severity = "critical"
+pattern = '\b(?:gh[pousr]_[A-Za-z0-9]{36,255}|github_pat_[A-Za-z0-9_]{22,255})\b'
+ignore_case = false
+validator = "none"
+action = "mask"
+
+[[detector]]
+id = "slack-token"
+target = "value"
+kind = "credential"
+severity = "critical"
+pattern = '\bxox[abposr]-[A-Za-z0-9-]{10,}'
+ignore_case = false
+validator = "none"
+action = "mask"
+
+[[detector]]
+id = "stripe-live-key"
+target = "value"
+kind = "credential"
+severity = "critical"
+pattern = '\b(?:sk|rk)_live_[A-Za-z0-9]{24,}\b'
+ignore_case = false
+validator = "none"
+action = "mask"
+
+[[detector]]
+id = "google-api-key"
+target = "value"
+kind = "credential"
+severity = "critical"
+pattern = '\bAIza[0-9A-Za-z_-]{35}'
+ignore_case = false
+validator = "none"
+action = "mask"
+
+[[detector]]
+id = "private-key-block"
+target = "value"
+kind = "credential"
+severity = "critical"
+pattern = '-----BEGIN (?:[A-Z0-9]+ )*PRIVATE KEY-----'
+ignore_case = false
+validator = "none"
+action = "mask"
+
+# The token must contain a digit or one of `._~+/-`, so prose such as
+# "Bearer authentication is required" does not match.
+[[detector]]
+id = "bearer-token"
+target = "value"
+kind = "credential"
+severity = "critical"
+pattern = '\b[Bb]earer[ \t]+(?=[A-Za-z0-9._~+/-]*[0-9._~+/-])[A-Za-z0-9._~+/-]{8,}=*'
+ignore_case = false
+validator = "none"
+action = "mask"
+
+[[detector]]
+id = "basic-auth"
+target = "value"
+kind = "credential"
+severity = "critical"
+pattern = '\b[Bb]asic[ \t]+[A-Za-z0-9+/]{8,}={0,2}'
+ignore_case = false
+validator = "basic"
+action = "mask"
+
+# scheme://user:password@host, scheme://token@host, or scheme://:password@host
+[[detector]]
+id = "url-userinfo"
+target = "value"
+kind = "credential"
+severity = "critical"
+pattern = '\b[A-Za-z][A-Za-z0-9+.-]*://(?:[^/?#\s:@]+(?::[^/?#\s@]*)?|:[^/?#\s@]+)@'
+ignore_case = false
+validator = "none"
+action = "mask"
+
+[[detector]]
+id = "url-query-secret"
+target = "value"
+kind = "credential"
+severity = "critical"
+pattern = '(?:^|[?&;])(?:api_key|apikey|api-key|token|access_token|sig|signature|password|secret|client_secret|code)=[^&#\s]+'
+ignore_case = true
+validator = "none"
+action = "mask"
+
+# Free-text credential assignments in log bodies and exception messages:
+# `password=hunter2`, `db_password=hunter2`, `pw: x1y2`, `{"password":"hunter2"}`. The word
+# starts at a word boundary or after `_`, and must end there (so `passwordless`, `tokens=5` do
+# not match); the value is >= 4 characters.
+[[detector]]
+id = "inline-secret-assignment"
+target = "value"
+kind = "credential"
+severity = "critical"
+pattern = '''(?:\b|_)(?:client_secret|access_token|refresh_token|auth_token|api[_-]?key|passphrase|password|passwd|secret|token|pwd|pw)["']?[ \t]*[=:][ \t]*["']?[^\s"'&,;]{4,}'''
+ignore_case = true
+validator = "none"
+action = "mask"
+
+[[detector]]
+id = "credit-card"
+target = "value"
+kind = "pii"
+severity = "high"
+pattern = '\b(?:\d[ -]?){12,18}\d\b'
+ignore_case = false
+validator = "luhn"
+action = "mask"
+
+[[detector]]
+id = "email"
+target = "value"
+kind = "pii"
+severity = "high"
+pattern = '[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}'
+ignore_case = false
+validator = "none"
+action = "hmac"
+
+[[detector]]
+id = "us-ssn"
+target = "value"
+kind = "pii"
+severity = "high"
+pattern = '\b(?!000|666|9\d\d)\d{3}-(?!00)\d{2}-(?!0000)\d{4}\b'
+ignore_case = false
+validator = "none"
+action = "mask"
+
+[[detector]]
+id = "phone-e164"
+target = "value"
+kind = "pii"
+severity = "high"
+pattern = '\+[1-9]\d{7,14}\b'
+ignore_case = false
+validator = "none"
+action = "hmac"
+
+[[detector]]
+id = "ipv4"
+target = "value"
+kind = "quasi"
+severity = "medium"
+pattern = '\b(?:(?:25[0-5]|2[0-4]\d|1?\d?\d)\.){3}(?:25[0-5]|2[0-4]\d|1?\d?\d)\b'
+ignore_case = false
+validator = "none"
+action = "truncate_ip"
+
+# Full form, or compressed form with `::` between at least one group on each side.
+[[detector]]
+id = "ipv6"
+target = "value"
+kind = "quasi"
+severity = "medium"
+pattern = '\b(?:[0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4}\b|\b(?:[0-9A-Fa-f]{1,4}:){1,6}(?::[0-9A-Fa-f]{1,4}){1,6}\b'
+ignore_case = false
+validator = "none"
+action = "truncate_ip"

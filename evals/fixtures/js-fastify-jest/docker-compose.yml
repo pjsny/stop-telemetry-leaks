@@ -1,0 +1,26 @@
+services:
+  accounts:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      NODE_ENV: production
+      DATABASE_FILE: /data/accounts.db
+      CREDIT_SERVICE_URL: http://credit:7070
+      CREDIT_API_TOKEN: ${CREDIT_API_TOKEN}
+      OTEL_SERVICE_NAME: accounts-service
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector:4318
+      OTEL_RESOURCE_ATTRIBUTES: deployment.environment.name=staging,service.namespace=accounts,deployment.db_password=FAKE-staging-Passw0rd-EXAMPLE
+    volumes:
+      - accounts-data:/data
+    depends_on:
+      - otel-collector
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.140.0
+    command: ["--config=/etc/otelcol/config.yaml"]
+    volumes:
+      - ./otel-collector.yaml:/etc/otelcol/config.yaml:ro
+
+volumes:
+  accounts-data:

@@ -1,0 +1,146 @@
+{
+  "skill_name": "stop-telemetry-leaks",
+  "iteration": "iteration-1",
+  "seed": "evalseed42",
+  "summary": {
+    "with_skill": {
+      "mean_pass_rate": 0.8125,
+      "runs": 4
+    },
+    "without_skill": {
+      "mean_pass_rate": 0.625,
+      "runs": 4
+    }
+  },
+  "evals": {
+    "js-express-vitest": {
+      "pass_rate": {
+        "with_skill": 1.0,
+        "without_skill": 0.6667
+      },
+      "delta": 0.3333,
+      "rerun": {
+        "with_skill": {
+          "test_exit_code": 0,
+          "canary_run_exit_code": 0,
+          "canary_test_exit_code": 0,
+          "captured": true,
+          "canary_token_hits": 0,
+          "canary_pii_hits": 3,
+          "critical_findings": 0,
+          "scan_exit_code": 0
+        },
+        "without_skill": {
+          "test_exit_code": 0,
+          "canary_run_exit_code": 0,
+          "canary_test_exit_code": 0,
+          "captured": true,
+          "canary_token_hits": 2,
+          "canary_pii_hits": 7,
+          "critical_findings": 6,
+          "scan_exit_code": 0
+        }
+      },
+      "pristine": {
+        "test_exit_code": 0,
+        "canary_run_exit_code": 0,
+        "canary_test_exit_code": 0,
+        "captured": true,
+        "canary_token_hits": 38,
+        "canary_pii_hits": 7,
+        "critical_findings": 17,
+        "scan_exit_code": 0
+      }
+    },
+    "js-fastify-jest": {
+      "pass_rate": {
+        "with_skill": 0.8333,
+        "without_skill": 0.6667
+      },
+      "delta": 0.1666,
+      "rerun": {
+        "with_skill": {
+          "test_exit_code": 0,
+          "canary_run_exit_code": 0,
+          "canary_test_exit_code": 0,
+          "captured": true,
+          "canary_token_hits": 0,
+          "canary_pii_hits": 0,
+          "critical_findings": 0,
+          "scan_exit_code": 0
+        },
+        "without_skill": {
+          "test_exit_code": 0,
+          "canary_run_exit_code": 0,
+          "canary_test_exit_code": 0,
+          "captured": true,
+          "canary_token_hits": 12,
+          "canary_pii_hits": 0,
+          "critical_findings": 6,
+          "scan_exit_code": 0
+        }
+      },
+      "pristine": {
+        "test_exit_code": 0,
+        "canary_run_exit_code": 0,
+        "canary_test_exit_code": 0,
+        "captured": true,
+        "canary_token_hits": 20,
+        "canary_pii_hits": 0,
+        "critical_findings": 8,
+        "scan_exit_code": 0
+      }
+    },
+    "py-fastapi-pytest": {
+      "pass_rate": {
+        "with_skill": 0.6667,
+        "without_skill": 0.6667
+      },
+      "delta": 0.0,
+      "rerun": {
+        "with_skill": {
+          "test_exit_code": 0,
+          "canary_run_exit_code": 0,
+          "canary_test_exit_code": 0,
+          "captured": true,
+          "canary_token_hits": 2,
+          "canary_pii_hits": 7,
+          "critical_findings": 2,
+          "scan_exit_code": 0
+        },
+        "without_skill": {
+          "test_exit_code": 0,
+          "canary_run_exit_code": 0,
+          "canary_test_exit_code": 0,
+          "captured": true,
+          "canary_token_hits": 9,
+          "canary_pii_hits": 7,
+          "critical_findings": 5,
+          "scan_exit_code": 0
+        }
+      },
+      "pristine": {
+        "test_exit_code": 0,
+        "canary_run_exit_code": 0,
+        "canary_test_exit_code": 0,
+        "captured": true,
+        "canary_token_hits": 24,
+        "canary_pii_hits": 7,
+        "critical_findings": 12,
+        "scan_exit_code": 0
+      }
+    },
+    "web-replay": {
+      "pass_rate": {
+        "with_skill": 0.75,
+        "without_skill": 0.5
+      },
+      "delta": 0.25,
+      "rerun": {
+        "with_skill": null,
+        "without_skill": null
+      }
+    }
+  },
+  "delta_mean_pass_rate": 0.1875
+}

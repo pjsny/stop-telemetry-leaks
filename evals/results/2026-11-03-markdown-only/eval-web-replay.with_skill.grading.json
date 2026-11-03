@@ -1,0 +1,264 @@
+{
+  "eval": "web-replay",
+  "mode": "with_skill",
+  "expectations": [
+    {
+      "text": "Every critical plant in tests/fixtures/web-replay/expected.toml is reported in EVAL_RESULT.json (same file, line within 3 of the planted line) with action \"fixed\".",
+      "passed": true,
+      "evidence": "18 entries; 7/7 critical plants reported fixed"
+    },
+    {
+      "text": "No non-credential (non-critical) plant was changed: each one's planted code is still present verbatim, and its EVAL_RESULT.json entry, if any, has action \"proposed\" or \"unverified\".",
+      "passed": false,
+      "evidence": "8/12 non-critical plants reported; changed in tree: ['posthog-record-body']; reported fixed: ['sentry-replay-enabled', 'sentry-mask-all-text-off', 'sentry-network-detail-allow-urls', 'posthog-record-body', 'rrweb-record-default-masking']"
+    },
+    {
+      "text": "No raw secret from the fixture appears in EVAL_RESULT.json, commit messages, or added diff lines.",
+      "passed": true,
+      "evidence": "checked 1 secret values; found: none"
+    },
+    {
+      "text": "Fixes are committed on a new branch (not the import branch) and EVAL_RESULT.json is not committed.",
+      "passed": true,
+      "evidence": "branch=otel-pii/2026-11-03, commits=7, EVAL_RESULT.json committed=False"
+    }
+  ],
+  "summary": {
+    "passed": 3,
+    "failed": 1,
+    "total": 4,
+    "pass_rate": 0.75
+  },
+  "metrics": {
+    "plants_reported": 15,
+    "plants": 19,
+    "unmatched_entries": 2,
+    "negative_hits": 0
+  },
+  "plant_matches": {
+    "sentry-replay-enabled": [
+      {
+        "file": "src/sentry.ts",
+        "line": 15,
+        "action": "fixed"
+      },
+      {
+        "file": "src/sentry.ts",
+        "line": 16,
+        "action": "fixed"
+      },
+      {
+        "file": "src/sentry.ts",
+        "line": 14,
+        "action": "proposed"
+      }
+    ],
+    "sentry-mask-all-text-off": [
+      {
+        "file": "src/sentry.ts",
+        "line": 15,
+        "action": "fixed"
+      },
+      {
+        "file": "src/sentry.ts",
+        "line": 16,
+        "action": "fixed"
+      },
+      {
+        "file": "src/sentry.ts",
+        "line": 14,
+        "action": "proposed"
+      }
+    ],
+    "sentry-mask-all-inputs-off": [
+      {
+        "file": "src/sentry.ts",
+        "line": 15,
+        "action": "fixed"
+      },
+      {
+        "file": "src/sentry.ts",
+        "line": 18,
+        "action": "fixed"
+      },
+      {
+        "file": "src/sentry.ts",
+        "line": 16,
+        "action": "fixed"
+      },
+      {
+        "file": "src/sentry.ts",
+        "line": 14,
+        "action": "proposed"
+      }
+    ],
+    "sentry-network-detail-allow-urls": [
+      {
+        "file": "src/sentry.ts",
+        "line": 15,
+        "action": "fixed"
+      },
+      {
+        "file": "src/sentry.ts",
+        "line": 18,
+        "action": "fixed"
+      },
+      {
+        "file": "src/sentry.ts",
+        "line": 16,
+        "action": "fixed"
+      },
+      {
+        "file": "src/sentry.ts",
+        "line": 14,
+        "action": "proposed"
+      }
+    ],
+    "sentry-records-authorization-header": [
+      {
+        "file": "src/sentry.ts",
+        "line": 15,
+        "action": "fixed"
+      },
+      {
+        "file": "src/sentry.ts",
+        "line": 18,
+        "action": "fixed"
+      },
+      {
+        "file": "src/sentry.ts",
+        "line": 16,
+        "action": "fixed"
+      },
+      {
+        "file": "src/sentry.ts",
+        "line": 14,
+        "action": "proposed"
+      }
+    ],
+    "posthog-recording-enabled": [],
+    "posthog-mask-all-inputs-off": [
+      {
+        "file": "src/analytics.ts",
+        "line": 9,
+        "action": "fixed"
+      },
+      {
+        "file": "src/analytics.ts",
+        "line": 10,
+        "action": "fixed"
+      },
+      {
+        "file": "src/analytics.ts",
+        "line": 8,
+        "action": "proposed"
+      }
+    ],
+    "posthog-record-headers": [
+      {
+        "file": "src/analytics.ts",
+        "line": 9,
+        "action": "fixed"
+      },
+      {
+        "file": "src/analytics.ts",
+        "line": 10,
+        "action": "fixed"
+      },
+      {
+        "file": "src/analytics.ts",
+        "line": 8,
+        "action": "proposed"
+      }
+    ],
+    "posthog-record-body": [
+      {
+        "file": "src/analytics.ts",
+        "line": 9,
+        "action": "fixed"
+      },
+      {
+        "file": "src/analytics.ts",
+        "line": 10,
+        "action": "fixed"
+      },
+      {
+        "file": "src/analytics.ts",
+        "line": 8,
+        "action": "proposed"
+      }
+    ],
+    "datadog-replay-enabled": [],
+    "datadog-privacy-allow": [
+      {
+        "file": "src/rum.ts",
+        "line": 16,
+        "action": "fixed"
+      },
+      {
+        "file": "src/rum.ts",
+        "line": 16,
+        "action": "proposed"
+      }
+    ],
+    "rrweb-record-default-masking": [
+      {
+        "file": "src/recorder.ts",
+        "line": 16,
+        "action": "fixed"
+      },
+      {
+        "file": "src/recorder.ts",
+        "line": 16,
+        "action": "proposed"
+      }
+    ],
+    "clarity-snippet": [
+      {
+        "file": "index.html",
+        "line": 12,
+        "action": "unverified"
+      }
+    ],
+    "checkout-email-unmasked": [],
+    "checkout-card-number-unmasked": [
+      {
+        "file": "src/Checkout.tsx",
+        "line": 44,
+        "action": "fixed"
+      }
+    ],
+    "checkout-expiry-unmasked": [],
+    "checkout-cvv-unmasked": [
+      {
+        "file": "src/Checkout.tsx",
+        "line": 53,
+        "action": "fixed"
+      }
+    ],
+    "profile-renders-email": [
+      {
+        "file": "src/Profile.tsx",
+        "line": 15,
+        "action": "proposed"
+      },
+      {
+        "file": "src/Profile.tsx",
+        "line": 17,
+        "action": "proposed"
+      }
+    ],
+    "profile-renders-phone": [
+      {
+        "file": "src/Profile.tsx",
+        "line": 15,
+        "action": "proposed"
+      },
+      {
+        "file": "src/Profile.tsx",
+        "line": 17,
+        "action": "proposed"
+      }
+    ]
+  }
+}

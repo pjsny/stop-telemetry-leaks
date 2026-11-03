@@ -1,0 +1,185 @@
+{
+  "eval": "js-express-vitest",
+  "mode": "with_skill",
+  "expectations": [
+    {
+      "text": "Every critical plant in tests/fixtures/js-express-vitest/expected.toml is reported in EVAL_RESULT.json (same file, line within 3 of the planted line) with action \"fixed\".",
+      "passed": true,
+      "evidence": "11 entries; 7/7 critical plants reported fixed"
+    },
+    {
+      "text": "No non-credential (non-critical) plant was changed: each one's planted code is still present verbatim, and its EVAL_RESULT.json entry, if any, has action \"proposed\" or \"unverified\".",
+      "passed": true,
+      "evidence": "3/3 non-critical plants reported; changed in tree: none; reported fixed: none"
+    },
+    {
+      "text": "An objective rerun of the final tree with unseen canary tests (seed evalseed42) produces zero credential canary token hits and zero critical findings in scan_telemetry.py output.",
+      "passed": true,
+      "evidence": "captured=True, canary token hits=0, canary PII hits=3, critical findings=0"
+    },
+    {
+      "text": "No raw secret from the fixture appears in EVAL_RESULT.json, commit messages, or added diff lines.",
+      "passed": true,
+      "evidence": "checked 2 secret values; found: none"
+    },
+    {
+      "text": "The repo's own test command exits 0 on the final tree.",
+      "passed": true,
+      "evidence": "npm test --silent exited 0"
+    },
+    {
+      "text": "Fixes are committed on a new branch (not the import branch) and EVAL_RESULT.json is not committed.",
+      "passed": true,
+      "evidence": "branch=otel-pii/2026-11-03, commits=7, EVAL_RESULT.json committed=False"
+    }
+  ],
+  "summary": {
+    "passed": 6,
+    "failed": 0,
+    "total": 6,
+    "pass_rate": 1.0
+  },
+  "metrics": {
+    "plants_reported": 10,
+    "plants": 10,
+    "unmatched_entries": 0,
+    "negative_hits": 0,
+    "rerun": {
+      "test_exit_code": 0,
+      "canary_run_exit_code": 0,
+      "canary_test_exit_code": 0,
+      "captured": true,
+      "canary_token_hits": 0,
+      "canary_pii_hits": 3,
+      "critical_findings": 0,
+      "scan_exit_code": 0
+    }
+  },
+  "plant_matches": {
+    "server-header-capture-authorization": [
+      {
+        "file": "instrumentation.mjs",
+        "line": 18,
+        "action": "fixed"
+      },
+      {
+        "file": "instrumentation.mjs",
+        "line": 20,
+        "action": "fixed"
+      },
+      {
+        "file": "instrumentation.mjs",
+        "line": 16,
+        "action": "proposed"
+      }
+    ],
+    "server-header-capture-cookie": [
+      {
+        "file": "instrumentation.mjs",
+        "line": 18,
+        "action": "fixed"
+      },
+      {
+        "file": "instrumentation.mjs",
+        "line": 20,
+        "action": "fixed"
+      },
+      {
+        "file": "instrumentation.mjs",
+        "line": 16,
+        "action": "proposed"
+      }
+    ],
+    "server-header-capture-api-key": [
+      {
+        "file": "instrumentation.mjs",
+        "line": 18,
+        "action": "fixed"
+      },
+      {
+        "file": "instrumentation.mjs",
+        "line": 20,
+        "action": "fixed"
+      },
+      {
+        "file": "instrumentation.mjs",
+        "line": 16,
+        "action": "proposed"
+      }
+    ],
+    "server-query-api-key-unredacted": [
+      {
+        "file": "instrumentation.mjs",
+        "line": 18,
+        "action": "fixed"
+      },
+      {
+        "file": "instrumentation.mjs",
+        "line": 20,
+        "action": "fixed"
+      }
+    ],
+    "otlp-headers-in-env": [
+      {
+        "file": ".env",
+        "line": 6,
+        "action": "fixed"
+      },
+      {
+        "file": ".env",
+        "line": 3,
+        "action": "proposed"
+      }
+    ],
+    "user-email-span-attribute": [
+      {
+        "file": "src/app.js",
+        "line": 23,
+        "action": "proposed"
+      },
+      {
+        "file": "src/app.js",
+        "line": 26,
+        "action": "proposed"
+      }
+    ],
+    "request-body-in-exception": [
+      {
+        "file": "src/app.js",
+        "line": 69,
+        "action": "fixed"
+      }
+    ],
+    "password-in-log-body": [
+      {
+        "file": "src/app.js",
+        "line": 38,
+        "action": "fixed"
+      },
+      {
+        "file": "src/app.js",
+        "line": 38,
+        "action": "proposed"
+      }
+    ],
+    "email-in-baggage": [
+      {
+        "file": "src/app.js",
+        "line": 23,
+        "action": "proposed"
+      },
+      {
+        "file": "src/app.js",
+        "line": 26,
+        "action": "proposed"
+      }
+    ],
+    "email-in-span-name": [
+      {
+        "file": "src/app.js",
+        "line": 55,
+        "action": "proposed"
+      }
+    ]
+  }
+}

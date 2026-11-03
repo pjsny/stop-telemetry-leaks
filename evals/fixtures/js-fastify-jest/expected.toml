@@ -1,0 +1,45 @@
+[[plant]]
+id = "client-url-access-token"
+surface = "url"
+key = "url.full"
+file = "src/credit.js"
+match = "url.searchParams.set('access_token', apiToken)"
+severity = "critical"
+runtime = true
+static = false
+
+[[plant]]
+id = "server-header-capture-cookie"
+surface = "http.request.header"
+key = "http.request.header.cookie"
+file = "instrumentation.js"
+match = "requestHeaders: ['cookie', 'x-forwarded-for', 'user-agent']"
+severity = "critical"
+runtime = true
+
+[[plant]]
+id = "customer-phone-attribute"
+surface = "attribute"
+key = "customer.phone"
+file = "src/routes/customers.js"
+match = "setAttribute('customer.phone', phone)"
+severity = "high"
+runtime = true
+
+[[plant]]
+id = "ssn-literal-in-query-text"
+surface = "db"
+key = "db.query.text"
+file = "src/db.js"
+match = "span.setAttribute('db.query.text', sql)"
+severity = "high"
+runtime = true
+
+[[plant]]
+id = "password-in-resource-attributes"
+surface = "resource"
+key = "deployment.db_password"
+file = "docker-compose.yml"
+match = "deployment.db_password="
+severity = "critical"
+runtime = false

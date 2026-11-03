@@ -1,0 +1,71 @@
+{
+  "skill_name": "stop-telemetry-leaks",
+  "evals": [
+    {
+      "id": 1,
+      "name": "py-fastapi-pytest",
+      "prompt": "Find and fix credentials or PII (emails, names, phone numbers, card numbers, SSNs, IPs, user identifiers, passwords, tokens, API keys, cookies) that leak into OpenTelemetry telemetry (spans, span names, span events, logs, metrics, baggage, resource attributes, exporter configuration) or into browser RUM / session replay recordings. Fix credential leaks directly. For other PII, do not apply changes; list each as a proposed change. Keep the repo's tests passing. Commit fixes on a new branch. Write EVAL_RESULT.json at the repo root: a JSON list of {file, line, issue, severity, action: fixed|proposed|unverified, verified}, where line is the line number in the original file before your changes. Do not commit EVAL_RESULT.json.",
+      "expected_output": "FastAPI service with pytest and gRPC OTLP exporters. Plants: captured authorization and cookie request headers, an OTLP exporter API key in .env, emails in span attributes, span names, SQL text, baggage and metric attributes, a card number in a recorded exception, a password in a log body, GenAI message capture, and an enduser.id attribute. The agent fixes every credential (critical) leak in place and commits on a new branch, lists every other PII leak as a proposed change without applying it, keeps tests passing, and writes EVAL_RESULT.json at the repo root (uncommitted) without echoing raw secrets.",
+      "files": [
+        "evals/fixtures/py-fastapi-pytest"
+      ],
+      "assertions": [
+        "Every critical plant in evals/fixtures/py-fastapi-pytest/expected.toml is reported in EVAL_RESULT.json (same file, line within 3 of the planted line) with action \"fixed\".",
+        "No non-credential (non-critical) plant was changed: each one's planted code is still present verbatim, and its EVAL_RESULT.json entry, if any, has action \"proposed\" or \"unverified\".",
+        "An objective rerun of the final tree with unseen canary tests (seed evalseed42) produces zero credential canary token hits and zero critical findings in scan_telemetry.py output.",
+        "No raw secret from the fixture appears in EVAL_RESULT.json, commit messages, or added diff lines.",
+        "The repo's own test command exits 0 on the final tree.",
+        "Fixes are committed on a new branch (not the import branch) and EVAL_RESULT.json is not committed."
+      ]
+    },
+    {
+      "id": 2,
+      "name": "js-express-vitest",
+      "prompt": "Find and fix credentials or PII (emails, names, phone numbers, card numbers, SSNs, IPs, user identifiers, passwords, tokens, API keys, cookies) that leak into OpenTelemetry telemetry (spans, span names, span events, logs, metrics, baggage, resource attributes, exporter configuration) or into browser RUM / session replay recordings. Fix credential leaks directly. For other PII, do not apply changes; list each as a proposed change. Keep the repo's tests passing. Commit fixes on a new branch. Write EVAL_RESULT.json at the repo root: a JSON list of {file, line, issue, severity, action: fixed|proposed|unverified, verified}, where line is the line number in the original file before your changes. Do not commit EVAL_RESULT.json.",
+      "expected_output": "Express 5 ESM service with vitest. Plants: captured authorization, cookie and x-api-key headers, an unredacted api_key query parameter, an OTLP exporter license key in .env, a request body in a recorded exception, a password in a log body, and emails in a span attribute, baggage and a span name. The agent fixes every credential (critical) leak in place and commits on a new branch, lists every other PII leak as a proposed change without applying it, keeps tests passing, and writes EVAL_RESULT.json at the repo root (uncommitted) without echoing raw secrets.",
+      "files": [
+        "evals/fixtures/js-express-vitest"
+      ],
+      "assertions": [
+        "Every critical plant in evals/fixtures/js-express-vitest/expected.toml is reported in EVAL_RESULT.json (same file, line within 3 of the planted line) with action \"fixed\".",
+        "No non-credential (non-critical) plant was changed: each one's planted code is still present verbatim, and its EVAL_RESULT.json entry, if any, has action \"proposed\" or \"unverified\".",
+        "An objective rerun of the final tree with unseen canary tests (seed evalseed42) produces zero credential canary token hits and zero critical findings in scan_telemetry.py output.",
+        "No raw secret from the fixture appears in EVAL_RESULT.json, commit messages, or added diff lines.",
+        "The repo's own test command exits 0 on the final tree.",
+        "Fixes are committed on a new branch (not the import branch) and EVAL_RESULT.json is not committed."
+      ]
+    },
+    {
+      "id": 3,
+      "name": "js-fastify-jest",
+      "prompt": "Find and fix credentials or PII (emails, names, phone numbers, card numbers, SSNs, IPs, user identifiers, passwords, tokens, API keys, cookies) that leak into OpenTelemetry telemetry (spans, span names, span events, logs, metrics, baggage, resource attributes, exporter configuration) or into browser RUM / session replay recordings. Fix credential leaks directly. For other PII, do not apply changes; list each as a proposed change. Keep the repo's tests passing. Commit fixes on a new branch. Write EVAL_RESULT.json at the repo root: a JSON list of {file, line, issue, severity, action: fixed|proposed|unverified, verified}, where line is the line number in the original file before your changes. Do not commit EVAL_RESULT.json.",
+      "expected_output": "Fastify 5 CommonJS service with jest. Plants: an access_token in an outbound client URL, a captured cookie header, a database password in OTEL_RESOURCE_ATTRIBUTES, a phone number span attribute, and an SSN literal in db query text. The agent fixes every credential (critical) leak in place and commits on a new branch, lists every other PII leak as a proposed change without applying it, keeps tests passing, and writes EVAL_RESULT.json at the repo root (uncommitted) without echoing raw secrets.",
+      "files": [
+        "evals/fixtures/js-fastify-jest"
+      ],
+      "assertions": [
+        "Every critical plant in evals/fixtures/js-fastify-jest/expected.toml is reported in EVAL_RESULT.json (same file, line within 3 of the planted line) with action \"fixed\".",
+        "No non-credential (non-critical) plant was changed: each one's planted code is still present verbatim, and its EVAL_RESULT.json entry, if any, has action \"proposed\" or \"unverified\".",
+        "An objective rerun of the final tree with unseen canary tests (seed evalseed42) produces zero credential canary token hits and zero critical findings in scan_telemetry.py output.",
+        "No raw secret from the fixture appears in EVAL_RESULT.json, commit messages, or added diff lines.",
+        "The repo's own test command exits 0 on the final tree.",
+        "Fixes are committed on a new branch (not the import branch) and EVAL_RESULT.json is not committed."
+      ]
+    },
+    {
+      "id": 4,
+      "name": "web-replay",
+      "prompt": "Find and fix credentials or PII (emails, names, phone numbers, card numbers, SSNs, IPs, user identifiers, passwords, tokens, API keys, cookies) that leak into OpenTelemetry telemetry (spans, span names, span events, logs, metrics, baggage, resource attributes, exporter configuration) or into browser RUM / session replay recordings. Fix credential leaks directly. For other PII, do not apply changes; list each as a proposed change. Keep the repo's tests passing. Commit fixes on a new branch. Write EVAL_RESULT.json at the repo root: a JSON list of {file, line, issue, severity, action: fixed|proposed|unverified, verified}, where line is the line number in the original file before your changes. Do not commit EVAL_RESULT.json.",
+      "expected_output": "Browser app with Sentry Replay, PostHog, Datadog RUM, rrweb and Microsoft Clarity. Plants: recorders with masking turned off, recorded network headers and bodies, and unmasked checkout and profile fields. One field is already masked and must not be reported. Static only: no canary rerun. The agent fixes every credential (critical) leak in place and commits on a new branch, lists every other PII leak as a proposed change without applying it, keeps tests passing, and writes EVAL_RESULT.json at the repo root (uncommitted) without echoing raw secrets.",
+      "files": [
+        "evals/fixtures/web-replay"
+      ],
+      "assertions": [
+        "Every critical plant in evals/fixtures/web-replay/expected.toml is reported in EVAL_RESULT.json (same file, line within 3 of the planted line) with action \"fixed\".",
+        "No non-credential (non-critical) plant was changed: each one's planted code is still present verbatim, and its EVAL_RESULT.json entry, if any, has action \"proposed\" or \"unverified\".",
+        "No raw secret from the fixture appears in EVAL_RESULT.json, commit messages, or added diff lines.",
+        "Fixes are committed on a new branch (not the import branch) and EVAL_RESULT.json is not committed."
+      ]
+    }
+  ]
+}

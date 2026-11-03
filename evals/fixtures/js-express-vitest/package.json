@@ -1,0 +1,26 @@
+{
+  "name": "storefront-api",
+  "version": "2.3.0",
+  "private": true,
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node --import ./instrumentation.mjs server.js",
+    "dev": "node --watch --import ./instrumentation.mjs server.js",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@opentelemetry/api": "~1.10.0",
+    "@opentelemetry/exporter-logs-otlp-http": "^0.300.0",
+    "@opentelemetry/exporter-trace-otlp-http": "^0.300.0",
+    "@opentelemetry/instrumentation-express": "^0.72.0",
+    "@opentelemetry/instrumentation-http": "^0.300.0",
+    "@opentelemetry/sdk-logs": "^3.0.0",
+    "@opentelemetry/sdk-node": "^0.300.0",
+    "express": "^5.3.0"
+  },
+  "devDependencies": {
+    "supertest": "^7.3.1",
+    "vitest": "^5.1.0"
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "eval": "js-express-vitest",
+  "mode": "without_skill",
+  "expectations": [
+    {
+      "text": "Every critical plant in tests/fixtures/js-express-vitest/expected.toml is reported in EVAL_RESULT.json (same file, line within 3 of the planted line) with action \"fixed\".",
+      "passed": false,
+      "evidence": "12 entries; 2/7 critical plants reported fixed; missing or not fixed: server-header-capture-authorization, server-header-capture-cookie, server-header-capture-api-key, server-query-api-key-unredacted, request-body-in-exception"
+    },
+    {
+      "text": "No non-credential (non-critical) plant was changed: each one's planted code is still present verbatim, and its EVAL_RESULT.json entry, if any, has action \"proposed\" or \"unverified\".",
+      "passed": true,
+      "evidence": "3/3 non-critical plants reported; changed in tree: none; reported fixed: none"
+    },
+    {
+      "text": "An objective rerun of the final tree with unseen canary tests (seed evalseed42) produces zero credential canary token hits and zero critical findings in scan_telemetry.py output.",
+      "passed": false,
+      "evidence": "captured=True, canary token hits=2, canary PII hits=7, critical findings=6"
+    },
+    {
+      "text": "No raw secret from the fixture appears in EVAL_RESULT.json, commit messages, or added diff lines.",
+      "passed": true,
+      "evidence": "checked 2 secret values; found: none"
+    },
+    {
+      "text": "The repo's own test command exits 0 on the final tree.",
+      "passed": true,
+      "evidence": "npm test --silent exited 0"
+    },
+    {
+      "text": "Fixes are committed on a new branch (not the import branch) and EVAL_RESULT.json is not committed.",
+      "passed": true,
+      "evidence": "branch=fix/telemetry-credential-leaks, commits=2, EVAL_RESULT.json committed=False"
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 2,
+    "total": 6,
+    "pass_rate": 0.6667
+  },
+  "metrics": {
+    "plants_reported": 6,
+    "plants": 10,
+    "unmatched_entries": 4,
+    "negative_hits": 0,
+    "rerun": {
+      "test_exit_code": 0,
+      "canary_run_exit_code": 0,
+      "canary_test_exit_code": 0,
+      "captured": true,
+      "canary_token_hits": 2,
+      "canary_pii_hits": 7,
+      "critical_findings": 6,
+      "scan_exit_code": 0
+    }
+  },
+  "plant_matches": {
+    "server-header-capture-authorization": [],
+    "server-header-capture-cookie": [],
+    "server-header-capture-api-key": [],
+    "server-query-api-key-unredacted": [],
+    "otlp-headers-in-env": [
+      {
+        "file": ".env",
+        "line": 6,
+        "action": "fixed"
+      },
+      {
+        "file": ".env",
+        "line": 3,
+        "action": "fixed"
+      }
+    ],
+    "user-email-span-attribute": [
+      {
+        "file": "src/app.js",
+        "line": 23,
+        "action": "proposed"
+      },
+      {
+        "file": "src/app.js",
+        "line": 26,
+        "action": "proposed"
+      }
+    ],
+    "request-body-in-exception": [
+      {
+        "file": "src/app.js",
+        "line": 69,
+        "action": "proposed"
+      }
+    ],
+    "password-in-log-body": [
+      {
+        "file": "src/app.js",
+        "line": 38,
+        "action": "fixed"
+      },
+      {
+        "file": "src/app.js",
+        "line": 38,
+        "action": "proposed"
+      }
+    ],
+    "email-in-baggage": [
+      {
+        "file": "src/app.js",
+        "line": 23,
+        "action": "proposed"
+      },
+      {
+        "file": "src/app.js",
+        "line": 26,
+        "action": "proposed"
+      }
+    ],
+    "email-in-span-name": [
+      {
+        "file": "src/app.js",
+        "line": 55,
+        "action": "proposed"
+      }
+    ]
+  }
+}

@@ -1,0 +1,89 @@
+[[plant]]
+id = "server-header-capture-authorization"
+surface = "http.request.header"
+key = "http.request.header.authorization"
+file = "instrumentation.mjs"
+match = "requestHeaders: ['authorization', 'cookie', 'x-api-key', 'x-request-id']"
+severity = "critical"
+runtime = true
+
+[[plant]]
+id = "server-header-capture-cookie"
+surface = "http.request.header"
+key = "http.request.header.cookie"
+file = "instrumentation.mjs"
+match = "requestHeaders: ['authorization', 'cookie', 'x-api-key', 'x-request-id']"
+severity = "critical"
+runtime = true
+
+[[plant]]
+id = "server-header-capture-api-key"
+surface = "http.request.header"
+key = "http.request.header.x-api-key"
+file = "instrumentation.mjs"
+match = "requestHeaders: ['authorization', 'cookie', 'x-api-key', 'x-request-id']"
+severity = "critical"
+runtime = true
+
+[[plant]]
+id = "server-query-api-key-unredacted"
+surface = "url"
+key = "url.query"
+file = "instrumentation.mjs"
+match = "redactedQueryParams: ['token'],"
+severity = "critical"
+runtime = true
+
+[[plant]]
+id = "otlp-headers-in-env"
+surface = "exporter.config"
+key = "OTEL_EXPORTER_OTLP_HEADERS"
+file = ".env"
+match = "OTEL_EXPORTER_OTLP_HEADERS=api-key="
+severity = "critical"
+runtime = false
+
+[[plant]]
+id = "user-email-span-attribute"
+surface = "attribute"
+key = "user.email"
+file = "src/app.js"
+match = "setAttribute('user.email', email)"
+severity = "high"
+runtime = true
+
+[[plant]]
+id = "request-body-in-exception"
+surface = "exception"
+key = "exception.message"
+file = "src/app.js"
+match = "new Error(`coupon rejected: ${JSON.stringify(req.body)}`)"
+severity = "critical"
+runtime = true
+
+[[plant]]
+id = "password-in-log-body"
+surface = "log.body"
+key = ""
+file = "src/app.js"
+match = "body: `login ${email} pw=${password}`"
+severity = "critical"
+runtime = true
+
+[[plant]]
+id = "email-in-baggage"
+surface = "baggage"
+key = "user.email"
+file = "src/app.js"
+match = "createBaggage({ 'user.email': { value: email } })"
+severity = "high"
+runtime = false
+
+[[plant]]
+id = "email-in-span-name"
+surface = "span.name"
+key = ""
+file = "src/app.js"
+match = "startActiveSpan(`orders for ${email}`"
+severity = "high"
+runtime = true

@@ -1,0 +1,177 @@
+[[plant]]
+id = "sentry-replay-enabled"
+surface = "session_replay"
+key = "sentry-replay"
+file = "src/sentry.ts"
+match = "Sentry.replayIntegration({"
+severity = "medium"
+runtime = false
+
+[[plant]]
+id = "sentry-mask-all-text-off"
+surface = "session_replay.option"
+key = "sentry-replay"
+file = "src/sentry.ts"
+match = "maskAllText: false"
+severity = "high"
+runtime = false
+
+[[plant]]
+id = "sentry-mask-all-inputs-off"
+surface = "session_replay.option"
+key = "sentry-replay"
+file = "src/sentry.ts"
+match = "maskAllInputs: false"
+severity = "critical"
+runtime = false
+
+[[plant]]
+id = "sentry-network-detail-allow-urls"
+surface = "session_replay.option"
+key = "sentry-replay"
+file = "src/sentry.ts"
+match = "networkDetailAllowUrls: [window.location.origin"
+severity = "high"
+runtime = false
+
+[[plant]]
+id = "sentry-records-authorization-header"
+surface = "session_replay.option"
+key = "sentry-replay"
+file = "src/sentry.ts"
+match = "networkRequestHeaders: ['Authorization'"
+severity = "critical"
+runtime = false
+
+[[plant]]
+id = "posthog-recording-enabled"
+surface = "session_replay"
+key = "posthog"
+file = "src/analytics.ts"
+match = "posthog.init("
+severity = "medium"
+runtime = false
+
+[[plant]]
+id = "posthog-mask-all-inputs-off"
+surface = "session_replay.option"
+key = "posthog"
+file = "src/analytics.ts"
+match = "maskAllInputs: false"
+severity = "critical"
+runtime = false
+
+[[plant]]
+id = "posthog-record-headers"
+surface = "session_replay.option"
+key = "posthog"
+file = "src/analytics.ts"
+match = "recordHeaders: true"
+severity = "critical"
+runtime = false
+
+[[plant]]
+id = "posthog-record-body"
+surface = "session_replay.option"
+key = "posthog"
+file = "src/analytics.ts"
+match = "recordBody: true"
+severity = "high"
+runtime = false
+
+[[plant]]
+id = "datadog-replay-enabled"
+surface = "session_replay"
+key = "datadog-rum"
+file = "src/rum.ts"
+match = "sessionReplaySampleRate: 20"
+severity = "medium"
+runtime = false
+
+[[plant]]
+id = "datadog-privacy-allow"
+surface = "session_replay.option"
+key = "datadog-rum"
+file = "src/rum.ts"
+match = "defaultPrivacyLevel: 'allow'"
+severity = "critical"
+runtime = false
+
+[[plant]]
+id = "rrweb-record-default-masking"
+surface = "session_replay"
+key = "rrweb"
+file = "src/recorder.ts"
+match = "rrweb.record({"
+severity = "high"
+runtime = false
+
+[[plant]]
+id = "clarity-snippet"
+surface = "session_replay"
+key = "microsoft-clarity"
+file = "index.html"
+match = "https://www.clarity.ms/tag/"
+severity = "medium"
+runtime = false
+
+[[plant]]
+id = "checkout-email-unmasked"
+surface = "session_replay.field"
+key = "receiptEmail"
+file = "src/Checkout.tsx"
+match = 'name="receiptEmail"'
+severity = "high"
+runtime = false
+
+[[plant]]
+id = "checkout-card-number-unmasked"
+surface = "session_replay.field"
+key = "cardNumber"
+file = "src/Checkout.tsx"
+match = 'name="cardNumber"'
+severity = "critical"
+runtime = false
+
+[[plant]]
+id = "checkout-expiry-unmasked"
+surface = "session_replay.field"
+key = "expiry"
+file = "src/Checkout.tsx"
+match = 'name="expiry"'
+severity = "high"
+runtime = false
+
+[[plant]]
+id = "checkout-cvv-unmasked"
+surface = "session_replay.field"
+key = "cvv"
+file = "src/Checkout.tsx"
+match = 'name="cvv"'
+severity = "critical"
+runtime = false
+
+[[plant]]
+id = "profile-renders-email"
+surface = "session_replay.text"
+key = "user.email"
+file = "src/Profile.tsx"
+match = "{user.email}"
+severity = "high"
+runtime = false
+
+[[plant]]
+id = "profile-renders-phone"
+surface = "session_replay.text"
+key = "user.phone"
+file = "src/Profile.tsx"
+match = "{user.phone}"
+severity = "high"
+runtime = false
+
+[[negative]]
+id = "login-password-already-masked"
+surface = "session_replay.field"
+key = "password"
+file = "src/Login.tsx"
+match = 'type="password"'

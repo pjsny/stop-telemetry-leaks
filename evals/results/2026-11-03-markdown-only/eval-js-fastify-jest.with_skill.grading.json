@@ -1,0 +1,88 @@
+{
+  "eval": "js-fastify-jest",
+  "mode": "with_skill",
+  "expectations": [
+    {
+      "text": "Every critical plant in tests/fixtures/js-fastify-jest/expected.toml is reported in EVAL_RESULT.json (same file, line within 3 of the planted line) with action \"fixed\".",
+      "passed": false,
+      "evidence": "13 entries; 2/3 critical plants reported fixed; missing or not fixed: server-header-capture-cookie"
+    },
+    {
+      "text": "No non-credential (non-critical) plant was changed: each one's planted code is still present verbatim, and its EVAL_RESULT.json entry, if any, has action \"proposed\" or \"unverified\".",
+      "passed": true,
+      "evidence": "1/2 non-critical plants reported; changed in tree: none; reported fixed: none"
+    },
+    {
+      "text": "An objective rerun of the final tree with unseen canary tests (seed evalseed42) produces zero credential canary token hits and zero critical findings in scan_telemetry.py output.",
+      "passed": true,
+      "evidence": "captured=True, canary token hits=0, canary PII hits=0, critical findings=0"
+    },
+    {
+      "text": "No raw secret from the fixture appears in EVAL_RESULT.json, commit messages, or added diff lines.",
+      "passed": true,
+      "evidence": "checked 2 secret values; found: none"
+    },
+    {
+      "text": "The repo's own test command exits 0 on the final tree.",
+      "passed": true,
+      "evidence": "npm test --silent exited 0"
+    },
+    {
+      "text": "Fixes are committed on a new branch (not the import branch) and EVAL_RESULT.json is not committed.",
+      "passed": true,
+      "evidence": "branch=otel-pii/2026-11-03, commits=5, EVAL_RESULT.json committed=False"
+    }
+  ],
+  "summary": {
+    "passed": 5,
+    "failed": 1,
+    "total": 6,
+    "pass_rate": 0.8333
+  },
+  "metrics": {
+    "plants_reported": 3,
+    "plants": 5,
+    "unmatched_entries": 9,
+    "negative_hits": 0,
+    "rerun": {
+      "test_exit_code": 0,
+      "canary_run_exit_code": 0,
+      "canary_test_exit_code": 0,
+      "captured": true,
+      "canary_token_hits": 0,
+      "canary_pii_hits": 0,
+      "critical_findings": 0,
+      "scan_exit_code": 0
+    }
+  },
+  "plant_matches": {
+    "client-url-access-token": [
+      {
+        "file": "src/credit.js",
+        "line": 11,
+        "action": "fixed"
+      },
+      {
+        "file": "src/credit.js",
+        "line": 10,
+        "action": "proposed"
+      }
+    ],
+    "server-header-capture-cookie": [],
+    "customer-phone-attribute": [
+      {
+        "file": "src/routes/customers.js",
+        "line": 31,
+        "action": "proposed"
+      }
+    ],
+    "ssn-literal-in-query-text": [],
+    "password-in-resource-attributes": [
+      {
+        "file": "docker-compose.yml",
+        "line": 13,
+        "action": "fixed"
+      }
+    ]
+  }
+}
